@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>  <!--ng-app(디폴트모듈) 를 붙이지 않으면 AngularJS를 사용할 수 없다-->
+<head>
+  <meta charset="UTF-8">
+  <title>helloAngular</title>
+</head>
+<body>
+  Hello, {{'Angular'+'JS!'}}<br/>
+  10+10={{10+10}}<br/>
+  <input type='text' ng-model='msg' />  <!--ng-model 디렉티브는 변수를 선언하는 느낌-->
+  <p>{{msg}}</p>  <!--Model은 View와 연결되어 있다. MVVM Framework-->
+  <ul>
+    <li ng-repeat='tmp in [10,20,30,40,50]'>{{tmp}}</li>
+  </ul>
+  <input type='checkbox' ng-model='isChecked' />
+  <strong>{{isChecked}}</strong>
+</html>
+</body>
+
+<script src='js/angular.js'></script>

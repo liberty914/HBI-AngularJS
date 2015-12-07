@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Dir_ng-mouse</title>
+</head>
+<body ng-app ng-init='eventName=""; eventMove=0'>
+  <div class='box'
+      ng-mouseenter='eventName="mouseenter!"'
+      ng-mouseleave='eventName="mouseleave!"'
+      ng-mousemove='eventMove=eventMove+1'
+      ng-mousedown='eventName="mousedown!"'
+      ng-mouseup='eventName="mouseup!"'>
+  </div>
+  <p>이벤트명 : {{eventName}}
+   mousemove {{eventMove}}</p>
+
+
+  <div class='box'
+      ng-controller='aaaCtrl'
+      ng-mousemove='onMousemove($event)'>
+    {{'x '+eventX+' : y '+eventY}}
+  </div>
+</body>
+</html>
+
+<style>
+.box { width: 300px; height: 300px; background-color: #cecece; }
+</style>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('aaaCtrl', ['$scope', function(aaa) {
+  aaa.eventX = 0;
+  aaa.eventY = 0;
+  aaa.onMousemove = function($event) {
+    aaa.eventX = $event.offsetX;
+    aaa.eventY = $event.offsetY;
+  };
+}]);
+</script>

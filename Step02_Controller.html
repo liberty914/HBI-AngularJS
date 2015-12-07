@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Controller</title>
+</head>
+<body>
+  <!-- 아래 div에서 일어나는 일은 Ctrl1,2 컨트롤러로 제어를 하겠다는 의미 -->
+  <div ng-controller='Ctrl1'>
+    <p>내 이름은 <strong>{{name}}</strong></p>
+    <ul>
+      <li ng-repeat='aaa in nums'>{{aaa}}</li>
+    </ul>
+    <button ng-click='clicked();'>눌러보셈</button>
+  </div>
+  <div ng-controller='Ctrl2'>
+    <p>내 이름은 <strong>{{name}}</strong></p>
+    <ul>
+      <li ng-repeat='bbb in msg'>{{bbb}}</li>
+    </ul>
+    <button ng-click='clicked()'>눌러보셈</button>
+    <button ng-click='removeArr()'>배열 remove</button>
+    버튼을 {{count}} 번 눌렀네!
+  </div>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);  //두번째 인자의 빈 배열에 추가모듈을 정의할 수 있다.
+//하나의 모듈은 여러개의 controller 를 가질 수 있다.
+myApp.controller('Ctrl1', ['$scope', function($scope) {
+  $scope.name = 'Rex';
+  $scope.nums = [10, 20, 30, 40, 50];
+  $scope.clicked = function () {
+    console.log('clicked');
+    confirm('aa');
+    //이런곳에서 AJAX통신을 하는것임.
+  };
+  console.log('Ctrl1 초기화 완료');
+}]);
+myApp.controller('Ctrl2', ['$scope', function(aaa) {
+  //배열로 필요한 의존객체의 이름을 명시하면, 해당 객체를 주입받을 수 있다.
+  aaa.name = '하하하'
+  aaa.msg = ['하나', '두울', '세엣'];
+  aaa.count = 0;
+  aaa.clicked = function() {
+    aaa.count++;
+    aaa.msg.push(aaa.count);
+    //Model의 내용을 변경하면, View에 자동으로 반영이 된다.
+    //==> 이는 Model과 View가 완전히 동일하게 연결되어 있다는 증거! (MVVM Framework)
+    //==> Model의 내용이 바뀌면 View에 반영되고, View의 내용이 바뀌면 Model에 반영된다!
+    //==> 이것은 정확하게는, 반영된다는 개념이 아니라, 둘은 완전히 동일한 참조값을 지닌다.
+    //==> Model과 View는 완전히 동일한 참조값을 가진다.  ==> Call By Reference, Pointer
+    //==> 진짜 팩트는... Angular가 루프를 돌면서 바로바로 반영을 한다.
+    //==> 그러므로 퍼포먼스에 지장이 있는건 부정할 수 없다.
+  };
+  aaa.removeArr = function() {
+    aaa.msg.pop();
+  };
+  console.log('Ctrl2 초기화 완료');
+}]);
+</script>

@@ -11,3 +11,38 @@ Sublime Text 3 다운로드 (포터블)
 - Package Controll : Install Package (pci)
 (1) IME Support  --> 한글타이핑 지원
 (2) Emmet        --> Zen Coding
+
+
+3. Tools탭 - new Snippet
+- <content>의 CDATA[ 다음에 자동화시킬 내용을 씀
+- <tabTrigger>에 탭하면 나올 제목을 씀
+
+=========================================
+
+
+https://docs.angularjs.org/api/ng/directive/ngModel
+
+MVVM (양방향 데이터바인딩) Framework
+Model (data)  ==>  View (ui)
+View (ui)     ==>  Model (data)
+
+{{ }} 안에 있는 것들을 해석해서 보여줌
+{{ }} ==> $scope
+ng-model='aaa'  ==> Model
+{{aaa}} ==> View
+Model과 View는 연결되어있다!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
