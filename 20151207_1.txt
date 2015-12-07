@@ -1,0 +1,13 @@
+Sublime Text 3 다운로드 (포터블)
+
+1. http://packagecontrol.io
+ - install now 클릭
+ - 문자열을 모두 복사
+ - Sublime의 view탭 - Show Console 에서 복사한 문자열을 붙여넣기
+ - Sublime 재시작
+
+
+2. Preferences탭 - Package Control (ctrl + shift + p)
+- Package Controll : Install Package (pci)
+(1) IME Support  --> 한글타이핑 지원
+(2) Emmet        --> Zen Coding
