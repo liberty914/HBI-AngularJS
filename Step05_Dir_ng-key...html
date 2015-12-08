@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Dir_ng-key...</title>
+</head>
+<body ng-controller='one'>
+  <input type='text' ng-model='msg'
+        ng-keyup='onkeyup($event)'
+        ng-keydown='onkeydown($event)' />
+  <!-- 앵귤러, JavaScript 의 근본적인 문제점!
+       문자열이 동일할 경우, 참조값이 동일하다.
+       그러므로 하나를 더 생성할 경우, 에러가 난다. ==> Object화 시켜서 저장해야함.-->
+  <ul>
+    <li ng-repeat='tmp in msgs'>{{tmp.data}}</li>
+    <li>{{msg}}</li>
+  </ul>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('one', ['$scope', function(s) {
+  s.msgs = [{data: '하나'}];
+  s.onkeyup = function(e) {
+    //console.log(e);
+    console.log(e.keyCode);
+    if (e.keyCode === 13) {
+      s.msgs.push({data: s.msg});
+      s.msg = '';
+    }
+  };
+  s.onkeydown = function(e) {
+    console.log(e.keyCode);
+  };
+}]);
+</script>
