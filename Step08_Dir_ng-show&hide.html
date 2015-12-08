@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>ng-show&hide 디렉티브</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <div class='box' ng-init='isShow=false;'
+                   ng-mouseenter='isShow=true;'
+                   ng-mouseleave='isShow=false;'>
+    <p ng-show='isShow;'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam illum earum ipsam, repudiandae quo maiores ipsa sed ad veniam, consectetur eos, incidunt maxime quia provident, perspiciatis nobis repellat obcaecati porro!</p>
+    <!-- <p ng-hide='isShow;'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam illum earum ipsam, repudiandae quo maiores ipsa sed ad veniam, consectetur eos, incidunt maxime quia provident, perspiciatis nobis repellat obcaecati porro!</p> -->
+  </div>
+</body>
+</html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+<style>
+.box { width: 300px; height: 300px; background-color: #cecece; }
+</style>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+
+}]);
+</script>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <div class='container'>
+    <!-- angular 에서 form 의 name 속성의 value 를 사용한다.-->
+    <form action='loginAction' method='get' name='myForm' novalidate>
+      <div class='form-group'>
+        <label>아이디 <input type='text' name='id' class='form-control'
+                             ng-required='true' ng-model='id' /></label>
+        <p class='help-block' ng-show='myForm.id.$invalid'>반드시 입력하셈!</p><br/>
+        <label>비밀번호 <input type='password' name='pwd' class='form-control'
+                               ng-required='true' ng-model='pwd'
+                               ng-minlength='4' /></label>
+        <p class='help-block' ng-show='myForm.$error.minlength'>4글자 이상 입력하세요!</p><br/>
+      </div>
+      <button type='submit' class='btn btn-primary'
+              ng-disabled='myForm.$invalid'>로그인</button>
+    </form>
+    <p>myForm.$valid = {{myForm.$valid}}</p>
+    <p>myForm.$invalid = {{myForm.$invalid}}</p>
+    <p>myForm.id.$valid = {{myForm.id.$valid}}</p>
+    <p>myForm.pwd.$valid = {{myForm.pwd.$valid}}</p>
+    <p>myForm.$error = {{myForm.$error}}</p>
+  </div>
+</body>
+</html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+}]);
+</script>
