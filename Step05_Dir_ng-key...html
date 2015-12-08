@@ -12,11 +12,14 @@
        문자열이 동일할 경우, 참조값이 동일하다.
        그러므로 하나를 더 생성할 경우, 에러가 난다. ==> Object화 시켜서 저장해야함.-->
   <ul>
-    <li ng-repeat='tmp in msgs'>{{tmp.data}}</li>
-    <li>{{msg}}</li>
+    <li ng-repeat='tmp in msgs' class='btn btn-primary'>{{tmp.data}}</li>
+    <li class='btn btn-success'>{{msg}}</li>
   </ul>
 </body>
 </html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap-theme.css' />
 
 <script src='js/angular.js'></script>
 <script>

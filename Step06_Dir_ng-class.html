@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>ng-class디렉티브</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <p ng-class='myBtn' ng-click='clicked();'>aasdsad</p>
+</body>
+</html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+  sc.myBtn = ['btn', 'btn-default'];
+  sc.clicked = function() {
+    sc.myBtn = ['btn', 'btn-warning'];
+  };
+}]);
+</script>

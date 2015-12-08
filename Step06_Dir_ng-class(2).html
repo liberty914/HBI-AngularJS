@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>ng-class 디렉티브 2</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <button class='btn' ng-class='{"btn-primary": true}'>버튼</button>
+  <br/>
+  <button class='btn' ng-class='{"btn-info": info, "btn-block": block, "active": active}'>버튼</button>
+  <br/>
+  <label><input type='checkbox' ng-model='info' checked /> info : {{info}}</label>
+  <br/>
+  <label><input type='checkbox' ng-model='block' checked /> block : {{block}}</label>
+  <br/>
+  <label><input type='checkbox' ng-model='active' checked /> active : {{active}}</label>
+  <hr/>
+  <label><button class='btn' ng-init='selected="btn-danger"' ng-class='selected'>버튼</button>
+  <!--ng-init 디렉티브가 ng-model 디렉티브보다 나중에 로딩되는것을 알수 있다.-->
+  <select ng-model='selected'>
+    <option value='btn-primary'>primary</option>
+    <option value='btn-info'>info</option>
+    <option value='btn-warning'>warning</option>
+    <option value='btn-danger'>danger</option>
+  </select>
+  <hr/>
+  <p ng-init='bgColor="bg-success"' ng-class='bgColor'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt quis, dolores sint. Cumque ab nobis explicabo dignissimos unde, tempora quos consequuntur nesciunt tempore architecto perferendis doloremque quia, similique libero, provident.</p>
+  <select ng-model='bgColor'>
+    <option value='bg-primary'>primary</option>
+    <option value='bg-success'>success</option>
+    <option value='bg-warning'>warning</option>
+    <option value='bg-danger'>danger</option>
+  </select>
+  <hr/>
+  <table class='table table-bordered table-hover'>
+  <!--table-striped 를 넣으면 부트스트랩이 자체적으로 bg색상 css를 넣기때문에,
+      ng-class-odd 에서 bg색상 클래스를 넣으면 먹지않는다. (실제 css우선인듯)-->
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>주소</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='aaa in friends'
+          ng-class-even='"bg-info"'
+          ng-class-odd='"bg-success"'>  <!--even은 짝수, odd은 홀수를 나타냄-->
+        <td>{{aaa.num}}</td>
+        <td>{{aaa.name}}</td>
+        <td>{{aaa.addr}}</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap-theme.css' />
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+  //ajax로 받아온 데이터라고 가정
+  var data = [];
+  data.push({num: 1, name: '양동호', addr: '강남구 논현동'});
+  data.push({num: 2, name: 'Rex', addr: '강남구 청담동'});
+  data.push({num: 3, name: '오호라', addr: '강남구 오호동'});
+  data.push({num: 4, name: '하하하', addr: '강남구 아하동'});
+  sc.friends = data;
+}]);
+</script>
