@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>ng-animate</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <input type='checkbox' ng-model='isMake'/>
+  <br/>
+  <p></p>
+  <br/>
+  <img class='img-animation' ng-if='isMake;' src='images/image1.png'/>
+</body>
+</html>
+
+<link rel='stylesheet' href='bootstrap-3.3.6-dist/css/bootstrap.css' />
+<link rel='stylesheet' href='css/animate.css' />
+<style>
+/* 문서객체가 만들어지는 시점에 (체크박스가 선택되는 시점에),
+   1초동안 ng-enter, ng-enter-active 클래스가 부여됨
+   사라질때는 ng-leave, ng-leave-active 클래스가 부여됨
+   ==> ★★★ angular-animate.js 의 기능임!   */
+.img-animation.ng-enter {
+  animation: fadeInRight 0.4s;  /* animate.css 안에 있는 @keyframe 을 사용함 */
+}
+.img-animation.ng-leave {
+  animation: fadeOut 0.2s;  /* animate.css 안에 있는 @keyframe 을 사용함 */
+}
+</style>
+
+<!-- SPA (Single Page Application)
+   대표적인 케이스 ==> Gmail  ==> 페이지전환이 없다!
+   단점 : 개발은 좀 복잡하고, JS가 많아진다.
+   장점 : 로딩시간이 빠르다! 사용자가 편하다!
+   사용자 경험.
+   동적인 Animation,
+   사용자가 직관적으로 느낄수 있는 UI 를 위하여! -->
+
+<script src='angular-1.5.0-beta.2/angular.js'></script>
+<script src='angular-1.5.0-beta.2/angular-animate.js'></script>
+<!--animation을 쉽게 적용할수 있도록 도와주는 자바스크립트-->
+<script>
+var myApp = angular.module('myApp', ['ngAnimate']);  //의존모듈 네이밍룰 기억하자
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+
+}]);
+</script>

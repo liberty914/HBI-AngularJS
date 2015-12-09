@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='myApp'>
 <head>
   <meta charset="UTF-8">
   <title>ng-ifSwitch</title>
 </head>
-<body>
-
+<body ng-controller='ctrlOne'>
+  <a href='#' ng-focus='onFocus("anchor");' ng-blur='onBlur("anchor");'>링크</a>
+  <button ng-focus='onFocus("button");' ng-blur='onBlur("button");'>버튼</button>
+  <input type='text' placeholder='form요소'
+         ng-focus='onFocus("input");' ng-blur='onBlur("input");' /><br/>
+  <p>{{msg1}}</p>
+  <p>{{msg2}}</p>
+  <a href='#' ng-init='isMake=false;'
+     ng-focus='isMake=true;'
+     ng-blur='isMake=false;'>링크2</a><br/>
+  <img src='images/rabbit1.png'
+       ng-if='isMake;' />  <!--앵귤러의 if 문-->
+  <!--ng-show랑 뭐가 다른건지...??
+     ng-show는 문서객체가 이미 만들어져있고, css의 display속성만 다루는것이지만,
+     ng-if는 문서객체를 만들지, 제거할지에 대한 것이다.
+     그러므로 로딩속도의 차이가 분명히 있다.-->
+  <br/>
+  <select ng-init='num=1;' ng-model='num'>
+    <option value='1'>1</option>
+    <option value='2'>2</option>
+    <option value='3'>3</option>
+    <option value='4'>4</option>
+    <option value='5'>5</option>
+  </select>
+  <div ng-switch='num'>
+  <!--앵귤러의 switch 문  ==> ng-if와 동일하게 문서객체를 만들지, 제거할지 선택함-->
+    <img ng-switch-when='1' src='images/run1.png' />
+    <img ng-switch-when='2' src='images/run3.png' />
+    <img ng-switch-when='3' src='images/run2.png' />
+    <img ng-switch-default  src='images/rabbit1.png' />  <!--디폴트값도 있음-->
+  </div>
 </body>
 </html>
 
@@ -14,5 +43,13 @@
 <script src='js/angular.js'></script>
 <script>
 var myApp = angular.module('myApp', []);
-myApp.controller
+myApp.controller('ctrlOne', ['$scope', function($scope) {
+  $scope.onFocus = function(name) {
+    $scope.msg1 = name+' focus !';
+  };
+  $scope.onBlur = function(name) {
+    $scope.msg2 = name+' blur ~';
+  };
+  $scope.num = 1;
+}]);
 </script>
