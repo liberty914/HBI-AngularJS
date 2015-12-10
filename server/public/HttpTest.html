@@ -6,12 +6,13 @@
 </head>
 <body ng-controller='ctrlOne'>
   <h3>$http 서비스 테스트</h3>
-  <form ng-submit='send();'>  <!--ng-submit 처리를 하면 form전송은 무조건 막아진다. action속성을 쓰면 안됨.-->
+  <form ng-submit='send($event);' action='go'>  <!--ng-submit 처리를 하면 form전송은 무조건 막아진다. action속성을 쓰면 안됨.-->
     이름 <input type='text' ng-model='formData.name'/><br/>
     주소 <input type='text' ng-model='formData.addr'/><br/>
     <button type='submit'>전송</button>
   </form>
-  <p>{{formData}}</p>
+  <p>formData : {{formData}}</p>  <!--페이지 전환없이 UI를 업데이트했다는것에 의의-->
+  <p>response : {{response}}</p>
 </body>
 </html>
 
@@ -20,19 +21,24 @@
 var myApp = angular.module('myApp', []);
 myApp.controller('ctrlOne', ['$scope', '$http', function(sc, $http) {
   sc.formData = {};  //AJAX를 사용해 서버로 전송할 폼의 데이터
-  sc.send = function() {
+  sc.response = {};
+  sc.send = function(event) {
+    console.log(event);
+    event.preventDefault();
     //$http({}).success(function(data) {}).error(function(data) {});  //기본적인 틀
-    $http({
+    $http({  //$http 서비스를 이용해서, 서버에 AJAX 전송
       url: '/httpTest',
       method: 'post',
       data: sc.formData
     })  //메소드 체인으로 쓰는게 가독성이 좋다.
-    .success(function(data) {
+    .success(function(data) {  //서버에서 JSON 문자열로 응답을 하면 JS에서 Object로 변환되어 들어온다.
       console.log(data);
+      sc.response = data;
     })
     .error(function(data) {
       console.log(data);
     });
+    /*  JavaScript의 Promise 객체에 대해서 공부해보자!  */
   };
 }]);
 </script>

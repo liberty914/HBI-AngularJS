@@ -1,3 +1,7 @@
+
+//서버측 로직을 작성하는 코드
+
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -25,14 +29,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-//post 방식 "/httpTest" 요청 처리 
+//post 방식 "/httpTest" 요청 처리
 app.post("/httpTest", function(req, res){
   //요청 파라미터 추출
   var name=req.body.name;
   var addr=req.body.addr;
   //콘솔에 출력
   console.log(name+"/"+addr);
-  //응답할 javascript 객체 
+  //응답할 javascript 객체
   var data={response:"ok Client !"};
   //임시 응답
   res.json(data);
@@ -48,6 +52,10 @@ app.get("/jsonpTest", function(req, res){
   var callback=req.query.callback;
   console.log(callback);
   var data=["김구라","해골","원숭이"];
+  //console.log(callback+'('+JSON.stringify(data)+')');
+  //res.end(callback+'('+JSON.stringify(data)+')');
+  //==> merong(['김구라', '해골', '원숭이']) 가 만들어지고,
+  //==> 이게 문자열로 전송을하고, JavaScript로 인식이 되는 순간, 함수가 호출된다!
   //jsonp 응답
   res.jsonp(data);
 });
@@ -65,7 +73,7 @@ app.get("/jsonpTest2", function(req, res){
   console.log(name+"/"+addr);
   res.jsonp({response:"ok Client !"});
 });
-//셈플 데이터 
+//셈플 데이터
 var list=[{
   num:0,
   name:"김구라",
@@ -84,16 +92,16 @@ var list=[{
 }];
 
 app.get("/userList", function(req, res){
-  //json 응답 
+  //json 응답
   res.json(list);
 });
 
-//회원정보 1명 요청 처리 
+//회원정보 1명 요청 처리
 app.get("/getUser", function(req, res){
   var id = parseInt(req.query.userId);
-  //id 에 해당되는 회원정보를 얻어와서 
+  //id 에 해당되는 회원정보를 얻어와서
   var obj = list[id];
-  //json 응답 
+  //json 응답
   res.json(obj);
 });
 

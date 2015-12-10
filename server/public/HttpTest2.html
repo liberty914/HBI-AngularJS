@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Http 2</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <h3>$http 서비스 테스트2</h3>
+  <button ng-click='getList();'>목록 받아오기</button>
+  <ul>
+    <li ng-repeat='aaa in names'>{{aaa}}</li>
+  </ul>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', '$http', function(sc, ht) {
+  sc.names = ['하나', '두울'];
+  sc.getList = function() {
+    ht({
+      url: '/getList',
+      method: 'get'
+    })
+    .success(function(data) {  //지금의 경우, Array객체로 response를 전달받았음.
+      console.log(data);
+      for (var i in data) {
+        sc.names.push(data[i]);
+      }
+    })
+    .error(function(data) {
+
+    });
+  };
+}]);
+</script>

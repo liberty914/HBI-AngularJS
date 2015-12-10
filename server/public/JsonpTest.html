@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>JSONP 테스트</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <h3>$http 서비스 테스트2</h3>
+  <button ng-click='getList();'>목록 받아오기</button>
+  <ul>
+    <li ng-repeat='aaa in names'>{{aaa}}</li>
+  </ul>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', '$http', function(sc, ht) {
+  sc.names = ['하나', '두울'];
+  sc.getList = function() {
+    /*
+    ht({
+      url: '/getList',
+      method: 'get'
+    })
+    .success(function(data) {
+      console.log(data);
+      for (var i in data) {
+        sc.names.push(data[i]);
+      }
+    });  //로컬로 실행할 경우, AJAX요청을 응답하지 않는다.
+        //==> 해결책은 "JSONP" !                            */
+    var url = 'http://localhost:3000/jsonpTest?callback="JSON_CALLBACK"';  //JSON_CALLBACK은 angular와 약속된것.
+    //ht.jsonp(url, {params:{}}).success(function(data) {});
+    ht
+    .jsonp(url, {params:{'aaa': 'bbb'}})  //목표 URL과, 전달할 파라미터를 key: value 형식으로 넣는다.
+    .success(function(data) {  //JSONP 로 요청을 하니까 되었다!!
+      for (var i in data) {
+        sc.names.push(data[i]);
+      }
+    });
+  };
+}]);
+</script>
+
+<!--
+  JSONP 의 원리는,
+  동적으로 <head>태그에 JavaScript 에다가
+  <script src='http://localhost:3000/jsonpTest'></script> 를 붙인다.
+  JSON_CALLBACK() 이라는 함수를 호출한다.
+  그러면, Angular는 미리 안에다가 function JSON_CALLBACK(data) {} 를 만들어둔다.
+  그래서 해당 JSON_CALLBACK()함수에서 작업을 해주고 개발자는 그냥 갖다쓰면 된다.
+-->
