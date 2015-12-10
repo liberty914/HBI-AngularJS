@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Include 2</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <div ng-include='template.header;'></div>
+  <h3>Include Test2</h3>
+  <p>템플릿 이름 : <strong>{{template.header}}</strong></p>
+  <p>템플릿 이름 : <strong>{{template.footer}}</strong></p>
+  <div ng-include='template.footer;'></div>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+  sc.template = {
+    name: 'footer',
+    header: 'fragment/header.html',
+    footer: 'fragment/footer.html'  //상대경로도 되고, 절대경로도 된다.
+  };
+}]);
+</script>

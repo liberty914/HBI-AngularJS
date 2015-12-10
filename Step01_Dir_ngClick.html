@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>Dir_ngClick</title>
+</head>
+<body>
+  <button ng-init='msg=""' ng-click='msg="clicked!"'>눌러보셈</button>
+  <p>{{msg}}</p>
+  <button ng-init='count=0' ng-click='count=count+1'>눌러보셈2</button>
+  <p>버튼을 <strong>{{count}}</strong> 번 눌렀네?!</p>
+</body>
+</html>
+
+<script src='js/angular.js'></script>

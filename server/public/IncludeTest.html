@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="UTF-8">
+  <title>IncludeTest</title>
+</head>
+<body>
+  <!-- 아... html에서 include까지 가능하다니... 앵귤러 사랑합니다!!! -->
+  <div ng-include='"fragment/header.html";'></div>
+  <!--클라이언트 사이드에서 AJAX통신으로 해당 페이지를 불러온것임! 대박! (로컬에서는 안됨)
+      앵귤러에게 원본Source는 '템플릿(껍데기)' 에 불과하다.
+      앵귤러가 원본Source를 토대로 "재해석" 을 한다. -->
+  <h3>Main 컨텐츠입니다.</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate harum recusandae error, impedit veritatis, rem laudantium numquam adipisci commodi similique, molestiae voluptas facere in inventore, excepturi? Sint optio dolor tempora!</p>
+  <div ng-include='"fragment/footer.html";'></div>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+
+</script>

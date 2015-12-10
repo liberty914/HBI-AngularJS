@@ -50,7 +50,8 @@ myApp.service('StarBucks', function() {
 //Spring MVC 와 거의 개념이 비슷하다!
 //서비스 1개에서 100군데를 사용할 수 있도록, 재사용 가능하도록, 주입받는 구조로 해야한다!
 
-//그러나 자바와 자바스크립트는
+//그러나 자바와 자바스크립트는 다르다. 분명한 차이점을 명확하게 인식해야한다.
+//자바는 인터페이스, 자바스크립트는 함수형식이다.
 
 myApp.controller('ctrlOne', ['$scope', 'StarBucks', function(sc, starbucks) {
   sc.orderCoffee = function() {

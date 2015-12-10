@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Http AJAX통신</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <h3>$http 서비스 테스트</h3>
+  <form ng-submit='send();'>  <!--ng-submit 처리를 하면 form전송은 무조건 막아진다. action속성을 쓰면 안됨.-->
+    이름 <input type='text' ng-model='formData.name'/><br/>
+    주소 <input type='text' ng-model='formData.addr'/><br/>
+    <button type='submit'>전송</button>
+  </form>
+  <p>{{formData}}</p>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', '$http', function(sc, $http) {
+  sc.formData = {};  //AJAX를 사용해 서버로 전송할 폼의 데이터
+  sc.send = function() {
+    //$http({}).success(function(data) {}).error(function(data) {});  //기본적인 틀
+    $http({
+      url: '/httpTest',
+      method: 'post',
+      data: sc.formData
+    })  //메소드 체인으로 쓰는게 가독성이 좋다.
+    .success(function(data) {
+      console.log(data);
+    })
+    .error(function(data) {
+      console.log(data);
+    });
+  };
+}]);
+</script>
