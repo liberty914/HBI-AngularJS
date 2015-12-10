@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Service</title>
+</head>
+<body>
+  <div ng-controller='ctrlOne'>
+    <button ng-click='orderCoffee();'>커피 주문하기</button>
+  </div>
+
+  <div ng-controller='ctrlTwo'>
+    <button ng-click='showCount();'>판매된 커피수량 보기</button>
+  </div>
+</body>
+</html>
+
+<script src='angular-1.5.0-beta.2/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);  //의존모듈 네이밍룰 기억하자
+
+//StarBucks 라는 이름의 서비스를 "myApp" 영역에 만든다.
+myApp.service('StarBucks', function() {
+  //서비스 함수 ==> Java의 Class 객체를 생성하는것과 동일하다. (의존성 주입할 객체 생성)
+  //서비스를 이용해서 비즈니스로직을 수행함!
+  //이 함수로 객체가 생성되었을 때, 어떤 저장소와 어떤 기능을 가지게 할지를 정한다.
+  /// Field (상태값)
+  this.coffeeCount = 0;  //Field 선언 및 초기화
+  this.breadCount = 0;
+
+  /// Getter & Setter
+  this.getCoffeeCount = function() {
+    return this.coffeeCount;
+  };
+
+  /// Method (행위)
+  this.saleCoffee = function() {  //Method 선언
+    this.coffeeCount++;
+    return '아메리카노';
+  };
+  this.saleBread = function() {
+    this.breadCount++;
+    return '샌드위치';
+  };
+});
+
+//재사용 가능한 서비스를 생성해놓고, 주입받는 방식으로 프로그래밍!!
+//컨트롤러 안에서는 비즈니스 로직을 수행하면 안된다.
+//모든 로직들은 서비스 안에 작성하고, 컨트롤러는 서비스를 통해서 사용한다!
+//Spring MVC 와 거의 개념이 비슷하다!
+//서비스 1개에서 100군데를 사용할 수 있도록, 재사용 가능하도록, 주입받는 구조로 해야한다!
+
+//그러나 자바와 자바스크립트는
+
+myApp.controller('ctrlOne', ['$scope', 'StarBucks', function(sc, starbucks) {
+  sc.orderCoffee = function() {
+    var coffee = starbucks.saleCoffee();
+    alert(coffee+' 를 마셔요! 냠냠~');
+  };
+}]);
+
+myApp.controller('ctrlTwo', ['$scope', 'StarBucks', function(sc, starbucks) {
+  sc.showCount = function() {
+
+    alert(new StarBucks().getCoffeeCount() + ' 잔 판매 되었습니다.');
+  };
+}]);
+</script>
+
+
+<!--컨트롤러가 다르지만, 주입받는 객체는 동일한 객체이다!
+   아무리 많은 컨트롤러에 의존객체를 주입해도
+   Angular는 SingleTon 패턴으로 객체를 주입한다!
+   ★ DI (Dependency Injection) ★
+
+   컨트롤러는 서비스라는 인터페이스(사실은 아니지만)를 거쳐서 StarBucks 객체에 접근하므로서,
+   '느슨한 결합' ==> 의존관계가 느슨해진다.
+
+   -->
