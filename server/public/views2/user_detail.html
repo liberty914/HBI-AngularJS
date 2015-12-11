@@ -1,0 +1,15 @@
+<h3>회원 연락처 자세히 보기</h3>
+<img src="{{user.imgSrc}}" width="200"/><br/>
+<div class="form-group">
+  <label>아이디</label>
+  <input type="text" value="{{user.num}}" class="form-control"/>
+</div>
+<div class="form-group">
+  <label>이름</label>
+  <input type="text" value="{{user.name}}" class="form-control"/>
+</div>
+<div class="form-group">
+  <label>전화번호</label>
+  <input type="text" value="{{user.phone}}" class="form-control"/>
+</div>
+<button class="btn btn-info" ng-click="goBack()">뒤로가기</button>

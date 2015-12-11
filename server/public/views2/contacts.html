@@ -1,0 +1,18 @@
+<h3>contacts 연락처 정보 입니다.</h3>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>아이디</th>
+      <th>이름</th>
+      <th>전화번호</th>
+    </tr>
+  </thead>
+  <tbody>  <!--얘는 로딩되었을때 contactsCtrl 이라는 컨트롤러가 있다.-->
+    <tr ng-repeat='tmp in userList' ng-click='goDetail(tmp.num)'>  <!--눌렀을때 번호를 들고갈수 있도록함-->
+      <td>{{tmp.num}}</td>
+      <td>{{tmp.name}}</td>
+      <td>{{tmp.phone}}</td>
+    </tr>
+  </tbody>
+</table>
