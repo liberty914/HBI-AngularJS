@@ -74,7 +74,9 @@ app.get("/jsonpTest2", function(req, res){
   console.log(name+"/"+addr);
   res.jsonp({response:"ok Client !"});
 });
-//셈플 데이터
+
+
+//아래 URI 에서 사용할 샘플 데이터
 var list=[{
   num:0,
   name:"김구라",
