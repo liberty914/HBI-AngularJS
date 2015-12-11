@@ -48,7 +48,7 @@ myApp.config(function($routeProvider) {
     templateUrl: 'views2/contacts.html',
     controller: 'contactsCtrl'  //개별 controller도 지정 가능! 필요하다면 service도 지정 가능
   })
-  .when('/user/:userId', {
+  .when('/user/:userNo', {
     templateUrl: 'views2/user_detail.html',
     controller: 'userDetailCtrl'
   })
@@ -64,7 +64,7 @@ myApp.controller("navCtrl",["$scope",function($scope){
 }]);
 
 myApp.controller('contactsCtrl', ['$scope', '$http', '$location', function(sc, ht, loca) {
-  //ht({}).success(function() {});  출력할 정보를 AJAX통신으로 가져옴
+  //$http({}).success(function() {});  출력할 정보를 AJAX통신으로 가져옴
   ht({
     url: '/userList',  //http://localhost:3000/userList
     method: 'get'
@@ -77,21 +77,20 @@ myApp.controller('contactsCtrl', ['$scope', '$http', '$location', function(sc, h
 }]);
 
 //회원정보 자세히보기 컨트롤러
-myApp.controller("userDetailCtrl",[
+myApp.controller("userDetailCtrl", [
     "$scope","$http","$routeParams","$location",
     function($scope, $http, $routeParams, $location){
     //$routeParams 를 이용해서 전달된 파라미터 추출
     // "/user/:userId"
-  var id = $routeParams.userId;  //파라미터들 중에 userId 로 들어오는것을 가져옴.
+  var no = $routeParams.userNo;  //파라미터들 중에 userId 로 들어오는것을 가져옴.
   //var test = $routeParams.test;
-  console.log(id);
+  console.log(no);
   //user 모델
   $scope.user={};
   //$http 서비스를 이용해서 자세한 회원정보 요청
-  var url="/getUser?userId="+id;
   $http({
-    url:url,
-    method:"GET"
+    url: "/getUser?userNo="+no,
+    method: "GET"
   }).success(function(data){
     //data => {"num":0,"name":"xxx",phone:"xx",imgSrc:"xxx"}
     $scope.user=data;

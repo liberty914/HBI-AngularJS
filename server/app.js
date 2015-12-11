@@ -101,7 +101,8 @@ app.get("/userList", function(req, res){
 
 //회원정보 1명 요청 처리
 app.get("/getUser", function(req, res){
-  var id = parseInt(req.query.userId);
+  var id = parseInt(req.query.userNo);
+  //==> request.getParameter("userNo");
   //id 에 해당되는 회원정보를 얻어와서
   var obj = list[id];
   //json 응답
@@ -141,4 +142,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+module.exports = app;  //앱객체를 리턴함.

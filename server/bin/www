@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app');  //상위폴더에 app.js가 있다.
 var debug = require('debug')('server:server');
 var http = require('http');
 
@@ -19,13 +19,13 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app);  //서버객체 얻어옴
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port);  //서버가 시작됨!
 server.on('error', onError);
 server.on('listening', onListening);
 
