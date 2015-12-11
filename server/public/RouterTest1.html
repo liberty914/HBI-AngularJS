@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Router</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <!--싱글페이지 App (SPA)-->
+  <h3>Router 테스트</h3>
+  <ul>
+    <li><a href='#home'>Home</a></li>
+    <li><a href='#game'>Game</a></li>
+    <li><a href='#contacts'>Contacts</a></li>
+    <li><a href='#etc'>etc...</a></li>
+  </ul>
+  <ng-view>  <!--조각파일을 만들수 있다. 심지어 뒤로가기도 가능!-->
+
+  </ng-view>
+</body>
+</html>
+
+
+<link rel='stylesheet' href='css/bootstrap.css'/>
+<script src='js/angular.js'></script>
+<script src='js/angular-route.js'></script>
+<!--페이지 라우터에 관련된 JavaScript 로딩-->
+<!-- <script src='js/angular-mymodule.js'></script>
+    <script>
+      var userApp = angular.module('yourApp', []); 처럼 모듈화도 가능하다.
+    </script> -->
+<script>
+var myApp = angular.module('myApp', ['ngRoute']);  //네이밍룰, 카멜케이스 기억하자. 자바스크립트다.
+
+//myApp 모듈 전역 설정
+myApp.config(function($routeProvider) {
+  $routeProvider
+  .when('/home', {templateUrl: 'views/home.html'})  //하나의 페이지에서 페이지 이동!
+  .when('/game', {templateUrl: 'views/game.html'})  //현재 페이지에서 href='#game' 을 만났을때!
+  .when('/contacts', {
+    templateUrl: 'views/contacts.html',
+    controller: 'contactsCtrl'  //개별 controller도 지정 가능! 필요하다면 service도 지정 가능
+  })
+  .otherwise({redirectTo:"/home"});  //디폴트설정 ==> 사용자가 url을 이상한걸 입력할경우
+                                    //"요청하신 페이지는 존재하지 않습니다." 등
+});
+
+myApp.controller('ctrlOne', ['$scope', function(sc) {
+
+}]);
+
+//연락처 정보에 관련된 컨트롤러
+myApp.controller('contactsCtrl', ['$scope', function(sc) {
+  sc.userList = [{
+    name: '동호',
+    phone: '8916'
+  }, {
+    name: '렉스',
+    phone: '0601'
+  }, {
+    name: '아이린',
+    phone: '3421'
+  }]
+}]);
+</script>

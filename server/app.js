@@ -48,7 +48,8 @@ app.get("/getList", function(req, res){
 });
 
 app.get("/jsonpTest", function(req, res){
-  //callback 이라는 파라미터로 넘어온값 읽어오기
+  //callback 이라는 파라미터로 넘어온값 읽어오기  ==> JSONP 로 response
+  //==> callback 이라는 파라미터가 없으면 ==> AJAX의 JSON 으로 response
   var callback=req.query.callback;
   console.log(callback);
   var data=["김구라","해골","원숭이"];

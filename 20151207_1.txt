@@ -1,7 +1,10 @@
+< 이정호 강사님 - oli999@naver.com >
+
 Sublime Text 3 다운로드 (포터블)
 
 ollehegg438
 info14738
+
 
 1. http://packagecontrol.io
  - install now 클릭

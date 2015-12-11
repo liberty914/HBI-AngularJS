@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>JSONP 2 테스트</title>
+</head>
+<body ng-controller='ctrlOne'>
+  <form ng-submit='send($event)' action='testAction'>
+    이름 <input type='text' ng-model='formData.name'/>
+    주소 <input type='text' ng-model='formData.addr'/>
+    <button type='submit'>전송</button>
+  </form>
+  <p>formData : {{formData}}</p>
+  <p>response : {{response}}</p>
+</body>
+</html>
+
+<script src='js/angular.js'></script>
+<script>
+var myApp = angular.module('myApp', []);
+myApp.controller('ctrlOne', ['$scope', '$http', function(sc, ht) {
+  sc.formData = {};
+  sc.send = function(ev) {
+    var url = 'http://localhost:3000/jsonpTest2?callback=JSON_CALLBACK';
+    //JSONP에 POST방식이란 없다. 무조건 get방식임.
+    //헤드에 <script src=''>를 만들고 src에 위의 url에 갔다온 뒤에,
+    //response로 받는데이터가 JavaScript의 형식을 띠고있고,
+    //callback() 함수에 적절한 인자를 호출하면,
+    //response된 데이터를 앵귤러가 Object로 바꿔서 data로 보내준다.
+    //주소창에 parameter를 붙여주는 get방식으로밖에 보낼수 없는것이다.
+    ht
+    .jsonp(url, {params: sc.formData})
+    .success(function(data) {
+      $scope.response = data;
+    });
+  };
+}]);
+</script>
+
+<!--
+  JSONP 의 원리는,
+  동적으로 <head>태그에 JavaScript 에다가
+  <script src='http://localhost:3000/jsonpTest'></script> 를 붙인다.
+  JSON_CALLBACK() 이라는 함수를 호출한다.
+  그러면, Angular는 미리 안에다가 function JSON_CALLBACK(data) {} 를 만들어둔다.
+  그래서 해당 JSON_CALLBACK()함수에서 작업을 해주고 개발자는 그냥 갖다쓰면 된다.
+-->

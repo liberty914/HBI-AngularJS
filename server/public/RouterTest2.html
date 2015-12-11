@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='myApp'>
+<head>
+  <meta charset="UTF-8">
+  <title>Router 2</title>
+</head>
+<body>
+  <div class='container'>
+    <div class='page-header'>
+      <h3>Angular JS <small class='label label-primary'>Router Test</small></h3>
+    </div>
+    <div class='row'>
+      <div class='col-xs-12 col-sm-4'>
+        <ul ng-controller='navCtrl' class='nav nav-pills nav-stacked'>
+          <li ng-class='{"active": activeMenu==="home"}'>
+            <a ng-click='setActive("home")' href="#home" class='active'>Home</a>
+          </li>
+          <li ng-class='{"active": activeMenu==="game"}'>
+            <a ng-click='setActive("game")' href="#game">Game</a>
+          </li>
+          <li ng-class='{"active": activeMenu==="contacts"}'>
+            <a ng-click='setActive("contacts")' href="#contacts">Contacts</a>
+          </li>
+        </ul>
+      </div>
+      <div class='col-xs-12 col-sm-8'>
+        <ng-view></ng-view>  <!--angular-route.js 에서만 지원하는 태그-->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<link rel='stylesheet' href='css/bootstrap.css' />
+<script src='js/angular.js'></script>
+<script src='js/angular-route.js'></script>
+<script>
+var myApp = angular.module('myApp', ['ngRoute']);
+
+//myApp 모듈 전역 설정
+myApp.config(function($routeProvider) {
+  $routeProvider
+  .when('/home', {templateUrl: 'views2/home.html'})  //하나의 페이지에서 페이지 이동!
+  .when('/game', {templateUrl: 'views2/game.html'})  //현재 페이지에서 href='#game' 을 만났을때!
+  .when('/contacts', {
+    templateUrl: 'views2/contacts.html',
+    controller: 'contactsCtrl'  //개별 controller도 지정 가능! 필요하다면 service도 지정 가능
+  })
+  .when('/user/:userId', {
+    templateUrl: 'views2/user_detail.html',
+    controller: 'userDetailCtrl'
+  })
+  .otherwise({redirectTo:"/home"});  //디폴트설정 ==> 사용자가 url을 이상한걸 입력할경우
+                                    //"요청하신 페이지는 존재하지 않습니다." 등
+});
+
+myApp.controller("navCtrl",["$scope",function($scope){
+  $scope.activeMenu = "home";
+  $scope.setActive = function(menu){
+    $scope.activeMenu = menu;
+  };
+}]);
+
+myApp.controller('contactsCtrl', ['$scope', '$http', '$location', function(sc, ht, loca) {
+  //ht({}).success(function() {});  출력할 정보를 AJAX통신으로 가져옴
+  ht({
+    url: '/userList',  //http://localhost:3000/userList
+    method: 'get'
+  }).success(function(data) {
+    sc.userList = data;
+  });
+  sc.goDetail = function(userNo) {
+    loca.url('/user/'+userNo);  //router 내에서의 위치를 얘를 통해서 바꿀수 있다.
+  };
+}]);
+
+//회원정보 자세히보기 컨트롤러
+myApp.controller("userDetailCtrl",[
+    "$scope","$http","$routeParams","$location",
+    function($scope, $http, $routeParams, $location){
+    //$routeParams 를 이용해서 전달된 파라미터 추출
+    // "/user/:userId"
+  var id = $routeParams.userId;  //파라미터들 중에 userId 로 들어오는것을 가져옴.
+  //var test = $routeParams.test;
+  console.log(id);
+  //user 모델
+  $scope.user={};
+  //$http 서비스를 이용해서 자세한 회원정보 요청
+  var url="/getUser?userId="+id;
+  $http({
+    url:url,
+    method:"GET"
+  }).success(function(data){
+    //data => {"num":0,"name":"xxx",phone:"xx",imgSrc:"xxx"}
+    $scope.user=data;
+  });
+  //뒤로 가기 버튼을 눌렀을때
+  $scope.goBack=function(){
+    $location.url("/contacts");
+  };
+}]);
+</script>
